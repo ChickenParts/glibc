@@ -1,0 +1,4 @@
+# ChickenOS inherits the Linux port — same syscall ABI, same register
+# conventions.  We override only syscall numbers, errno values, and
+# kernel-feature flags.
+unix/sysv/linux

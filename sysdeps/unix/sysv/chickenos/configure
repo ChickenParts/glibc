@@ -1,0 +1,22 @@
+/usr/share/autoconf/autoconf/trailer.m4:4: warning: AC_INIT was never used
+/usr/share/autoconf/autoconf/trailer.m4:4: warning: AC_OUTPUT was never used
+# This file is generated from configure.ac by Autoconf.  DO NOT EDIT!
+
+# ChickenOS sysdeps configure fragment.
+# We don't use Linux kernel headers, so define the version constants
+# directly to satisfy glibc's internal checks.
+
+printf "%s\n" "#define __LINUX_KERNEL_VERSION 0x060600" >>confdefs.h
+
+printf "%s\n" "#define __LINUX_KERNEL_VERSION_STR \"6.6.0\"" >>confdefs.h
+
+printf "%s\n" "#define __ABI_TAG_VERSION 6,6,0" >>confdefs.h
+
+
+# We have inlined syscalls (inherited from Linux sysdep.h).
+printf "%s\n" "#define HAVE_INLINED_SYSCALLS 1" >>confdefs.h
+
+
+# Use ldconfig for shared library management.
+use_ldconfig=yes
+
