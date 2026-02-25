@@ -1,8 +1,10 @@
 /* ChickenOS syscall numbers for x86_64 — unified across all architectures.
    Generated from include/chicken/syscall_numbers.h.
 
-   Syscalls not yet implemented in ChickenOS are mapped to high numbers
-   (0x3E0+) in an "unimplemented" range; the kernel returns -ENOSYS.  */
+   Category A syscalls have proper ChickenOS category numbers.
+   Category B (dead/Linux-only) syscalls are mapped to 0x3E0+ so the
+   kernel returns -ENOSYS via the dispatch table bounds check
+   (NR_SYSCALLS=1280).  */
 
 /* Core File I/O (0x000-0x03F) */
 #define __NR_read            0x00
@@ -28,6 +30,20 @@
 #define __NR_fdatasync       0x14
 #define __NR_truncate        0x15
 #define __NR_ftruncate       0x16
+#define __NR_sendfile        0x17
+#define __NR_fadvise64       0x18
+#define __NR_readahead       0x19
+#define __NR_fallocate       0x1A
+#define __NR_copy_file_range 0x1B
+#define __NR_creat           0x1C
+#define __NR_preadv          0x1D
+#define __NR_pwritev         0x1E
+#define __NR_preadv2         0x1F
+#define __NR_pwritev2        0x20
+#define __NR_splice          0x21
+#define __NR_tee             0x22
+#define __NR_vmsplice        0x23
+#define __NR_sync_file_range 0x24
 
 /* Pipes & FD Types (0x040-0x07F) */
 #define __NR_pipe            0x40
@@ -40,6 +56,8 @@
 #define __NR_signalfd        0x47
 #define __NR_signalfd4       0x48
 #define __NR_memfd_create    0x49
+#define __NR_close_range     0x4A
+#define __NR_userfaultfd     0x4B
 
 /* Directory & Path Operations (0x080-0x0BF) */
 #define __NR_mkdir           0x80
@@ -59,6 +77,15 @@
 #define __NR_fchown          0x8E
 #define __NR_lchown          0x8F
 #define __NR_umask           0x90
+#define __NR_mknod           0x91
+#define __NR_mknodat         0x92
+#define __NR_getdents        0x93
+#define __NR_utimensat       0x94
+#define __NR_newfstatat      0x95
+#define __NR_statx           0x96
+#define __NR_futimesat       0x97
+#define __NR_utime           0x98
+#define __NR_utimes          0x99
 /* *at variants */
 #define __NR_openat          0xA0
 #define __NR_mkdirat         0xA1
@@ -71,6 +98,9 @@
 #define __NR_fchownat        0xA8
 #define __NR_faccessat       0xA9
 #define __NR_renameat2       0xAA
+#define __NR_openat2         0xAB
+#define __NR_faccessat2      0xAC
+#define __NR_fchmodat2       0xAD
 
 /* Memory Management (0x0C0-0x0FF) */
 #define __NR_mmap            0xC0
@@ -84,6 +114,9 @@
 #define __NR_munlock         0xC8
 #define __NR_mlockall        0xC9
 #define __NR_munlockall      0xCA
+#define __NR_mlock2          0xCB
+#define __NR_mincore         0xCC
+#define __NR_remap_file_pages 0xCD
 
 /* Process Control (0x100-0x13F) */
 #define __NR_fork            0x100
@@ -94,6 +127,7 @@
 #define __NR_wait4           0x105
 #define __NR_waitid          0x106
 #define __NR_clone           0x107
+#define __NR_clone3          0x108
 #define __NR_getpid          0x109
 #define __NR_getppid         0x10A
 #define __NR_gettid          0x10B
@@ -102,6 +136,21 @@
 #define __NR_getpgid         0x10E
 #define __NR_setsid          0x10F
 #define __NR_getsid          0x110
+#define __NR_prctl           0x111
+#define __NR_getresuid       0x112
+#define __NR_setresuid       0x113
+#define __NR_getresgid       0x114
+#define __NR_setresgid       0x115
+#define __NR_setreuid        0x116
+#define __NR_setregid        0x117
+#define __NR_setfsuid        0x118
+#define __NR_setfsgid        0x119
+#define __NR_getcpu          0x11A
+#define __NR_execveat        0x11B
+#define __NR_personality     0x11C
+#define __NR_capget          0x11D
+#define __NR_capset          0x11E
+#define __NR_unshare         0x11F
 /* uid/gid ops */
 #define __NR_getuid          0x120
 #define __NR_setuid          0x121
@@ -111,6 +160,8 @@
 #define __NR_getegid         0x125
 #define __NR_getgroups       0x126
 #define __NR_setgroups       0x127
+#define __NR_acct            0x128
+#define __NR_kcmp            0x129
 
 /* Signals (0x140-0x17F) */
 #define __NR_kill            0x140
@@ -122,6 +173,13 @@
 #define __NR_rt_sigsuspend   0x146
 #define __NR_rt_sigreturn    0x147
 #define __NR_sigaltstack     0x148
+#define __NR_rt_sigtimedwait 0x149
+#define __NR_rt_sigqueueinfo 0x14A
+#define __NR_rt_tgsigqueueinfo 0x14B
+#define __NR_restart_syscall 0x14C
+#define __NR_pidfd_open      0x14D
+#define __NR_pidfd_send_signal 0x14E
+#define __NR_pidfd_getfd     0x14F
 #define __NR_alarm           0x160
 #define __NR_pause           0x161
 
@@ -135,6 +193,12 @@
 #define __NR_epoll_ctl       0x186
 #define __NR_epoll_wait      0x187
 #define __NR_epoll_pwait     0x188
+#define __NR_epoll_pwait2    0x189
+/* inotify */
+#define __NR_inotify_init    0x193
+#define __NR_inotify_init1   0x194
+#define __NR_inotify_add_watch 0x195
+#define __NR_inotify_rm_watch 0x196
 
 /* Sockets (0x1C0-0x1FF) */
 #define __NR_socket          0x1C0
@@ -153,6 +217,8 @@
 #define __NR_getpeername     0x1CD
 #define __NR_setsockopt      0x1CE
 #define __NR_getsockopt      0x1CF
+#define __NR_sendmmsg        0x1D0
+#define __NR_recvmmsg        0x1D1
 
 /* Time & Timers (0x200-0x23F) */
 #define __NR_gettimeofday    0x200
@@ -169,6 +235,9 @@
 #define __NR_timer_delete    0x20B
 #define __NR_setitimer       0x20C
 #define __NR_getitimer       0x20D
+#define __NR_clock_adjtime   0x20E
+#define __NR_adjtimex        0x20E  /* alias — glibc uses adjtimex for clock_adjtime */
+#define __NR_time            0x210
 
 /* System Info & Resources (0x240-0x27F) */
 #define __NR_uname           0x240
@@ -185,9 +254,26 @@
 #define __NR_reboot          0x24B
 #define __NR_sched_getaffinity 0x24C
 #define __NR_sched_setaffinity 0x24D
+#define __NR_sched_getparam  0x24E
+#define __NR_sched_setparam  0x24F
+#define __NR_sched_getscheduler 0x250
+#define __NR_sched_setscheduler 0x251
+#define __NR_sched_get_priority_max 0x252
+#define __NR_sched_get_priority_min 0x253
+#define __NR_sched_rr_get_interval 0x254
+#define __NR_sched_getattr   0x255
+#define __NR_sched_setattr   0x256
+#define __NR_rseq            0x257
+#define __NR_membarrier      0x258
+#define __NR_ioprio_get      0x259
+#define __NR_ioprio_set      0x25A
 #define __NR_futex           0x260
 #define __NR_set_robust_list 0x264
 #define __NR_get_robust_list 0x265
+#define __NR_futex_waitv     0x266
+#define __NR_futex_wait      0x267
+#define __NR_futex_wake      0x268
+#define __NR_futex_requeue   0x269
 
 /* Mount & Filesystem (0x280-0x2BF) */
 #define __NR_mount           0x280
@@ -196,225 +282,144 @@
 #define __NR_fstatfs         0x283
 #define __NR_sync            0x284
 #define __NR_syncfs          0x285
+#define __NR_chroot          0x286
+#define __NR_syslog          0x287
+#define __NR_pivot_root      0x288
+#define __NR_swapon          0x289
+#define __NR_swapoff         0x28A
+#define __NR_name_to_handle_at 0x293
+#define __NR_open_by_handle_at 0x294
 
 /* Terminal (0x2C0-0x2FF) */
 #define __NR_tcgetattr       0x2C0
 #define __NR_tcsetattr       0x2C1
+#define __NR_vhangup         0x2C5
+#define __NR_sethostname     0x2C6
+#define __NR_setdomainname   0x2C7
 
 /* Architecture-Specific (0x300-0x37F) */
 #define __NR_arch_prctl      0x300
 #define __NR_set_thread_area 0x301
 #define __NR_get_thread_area 0x302
 #define __NR_set_tid_address 0x303
+#define __NR_modify_ldt      0x304
+#define __NR_iopl            0x305
+#define __NR_ioperm          0x306
+
+/* Extended Attributes (0x320-0x32F) */
+#define __NR_setxattr        0x320
+#define __NR_getxattr        0x321
+#define __NR_listxattr       0x322
+#define __NR_removexattr     0x323
+#define __NR_fsetxattr       0x324
+#define __NR_fgetxattr       0x325
+#define __NR_flistxattr      0x326
+#define __NR_fremovexattr    0x327
+#define __NR_lsetxattr       0x328
+#define __NR_lgetxattr       0x329
+#define __NR_llistxattr      0x32A
+#define __NR_lremovexattr    0x32B
+
+/* IPC & SysV (0x340-0x35F) */
+#define __NR_semget          0x340
+#define __NR_semctl          0x341
+#define __NR_semop           0x342
+#define __NR_semtimedop      0x343
+#define __NR_msgget          0x344
+#define __NR_msgctl          0x345
+#define __NR_msgsnd          0x346
+#define __NR_msgrcv          0x347
+#define __NR_shmget          0x348
+#define __NR_shmctl          0x349
+#define __NR_shmat           0x34A
+#define __NR_shmdt           0x34B
+#define __NR_mq_open         0x34C
+#define __NR_mq_unlink       0x34D
+#define __NR_mq_timedsend    0x34E
+#define __NR_mq_timedreceive 0x34F
+#define __NR_mq_notify       0x350
+#define __NR_mq_getsetattr   0x351
 
 /* Debug (0x380-0x3BF) */
 #define __NR_ptrace          0x380
+#define __NR_process_vm_readv 0x381
+#define __NR_process_vm_writev 0x382
+#define __NR_seccomp         0x386
 
 /* ===================================================================
-   Syscalls glibc references but ChickenOS does not yet implement.
-   Mapped to high range (0x3E0+) so the kernel returns -ENOSYS.
+   Category B — dead/Linux-only syscalls that ChickenOS will never
+   implement. Mapped to 0x3E0+ so the kernel returns -ENOSYS.
+   NR_SYSCALLS=1280, so these are within bounds of the dispatch table.
    =================================================================== */
 #define __NR__sysctl         0x3E0
-#define __NR_acct            0x3E1
-#define __NR_add_key         0x3E2
-#define __NR_adjtimex        0x3E3
-#define __NR_afs_syscall     0x3E4
-#define __NR_bpf             0x3E5
-#define __NR_cachestat       0x3E6
-#define __NR_capget          0x3E7
-#define __NR_capset          0x3E8
-#define __NR_chroot          0x3E9
-#define __NR_clock_adjtime   0x3EA
-#define __NR_clone3          0x3EB
-#define __NR_close_range     0x3EC
-#define __NR_copy_file_range 0x3ED
-#define __NR_creat           0x3EE
-#define __NR_create_module   0x3EF
-#define __NR_delete_module   0x3F0
-#define __NR_epoll_ctl_old   0x3F1
-#define __NR_epoll_pwait2    0x3F2
-#define __NR_epoll_wait_old  0x3F3
-#define __NR_execveat        0x3F4
-#define __NR_faccessat2      0x3F5
-#define __NR_fadvise64       0x3F6
-#define __NR_fallocate       0x3F7
-#define __NR_fanotify_init   0x3F8
-#define __NR_fanotify_mark   0x3F9
-#define __NR_fchmodat2       0x3FA
-#define __NR_fgetxattr       0x3FB
-#define __NR_finit_module    0x3FC
-#define __NR_flistxattr      0x3FD
-#define __NR_fremovexattr    0x3FE
-#define __NR_fsconfig        0x3FF
-
-/* Continue unimplemented in 0x400+ range (kernel dispatch table is
-   sized to NR_SYSCALLS=1024 so these are safe) */
-#define __NR_fsetxattr       0x400
-#define __NR_fsmount         0x401
-#define __NR_fsopen          0x402
-#define __NR_fspick          0x403
-#define __NR_futex_requeue   0x404
-#define __NR_futex_wait      0x405
-#define __NR_futex_waitv     0x406
-#define __NR_futex_wake      0x407
-#define __NR_futimesat       0x408
-#define __NR_get_kernel_syms 0x409
-#define __NR_get_mempolicy   0x40A
-#define __NR_getcpu          0x40B
-#define __NR_getdents        0x40C
-#define __NR_getpmsg         0x40D
-#define __NR_getresgid       0x40E
-#define __NR_getresuid       0x40F
-#define __NR_getxattr        0x410
-#define __NR_init_module     0x411
-#define __NR_inotify_add_watch 0x412
-#define __NR_inotify_init    0x413
-#define __NR_inotify_init1   0x414
-#define __NR_inotify_rm_watch 0x415
-#define __NR_io_cancel       0x416
-#define __NR_io_destroy      0x417
-#define __NR_io_getevents    0x418
-#define __NR_io_pgetevents   0x419
-#define __NR_io_setup        0x41A
-#define __NR_io_submit       0x41B
-#define __NR_io_uring_enter  0x41C
-#define __NR_io_uring_register 0x41D
-#define __NR_io_uring_setup  0x41E
-#define __NR_ioperm          0x41F
-#define __NR_iopl            0x420
-#define __NR_ioprio_get      0x421
-#define __NR_ioprio_set      0x422
-#define __NR_kcmp            0x423
-#define __NR_kexec_file_load 0x424
-#define __NR_kexec_load      0x425
-#define __NR_keyctl          0x426
-#define __NR_landlock_add_rule 0x427
-#define __NR_landlock_create_ruleset 0x428
-#define __NR_landlock_restrict_self 0x429
-#define __NR_lgetxattr       0x42A
-#define __NR_listmount       0x42B
-#define __NR_listxattr       0x42C
-#define __NR_llistxattr      0x42D
-#define __NR_lookup_dcookie  0x42E
-#define __NR_lremovexattr    0x42F
-#define __NR_lsetxattr       0x430
-#define __NR_lsm_get_self_attr 0x431
-#define __NR_lsm_list_modules 0x432
-#define __NR_lsm_set_self_attr 0x433
-#define __NR_map_shadow_stack 0x434
-#define __NR_mbind           0x435
-#define __NR_membarrier      0x436
-#define __NR_memfd_secret    0x437
-#define __NR_migrate_pages   0x438
-#define __NR_mincore         0x439
-#define __NR_mknod           0x43A
-#define __NR_mknodat         0x43B
-#define __NR_mlock2          0x43C
-#define __NR_modify_ldt      0x43D
-#define __NR_mount_setattr   0x43E
-#define __NR_move_mount      0x43F
-#define __NR_move_pages      0x440
-#define __NR_mq_getsetattr   0x441
-#define __NR_mq_notify       0x442
-#define __NR_mq_open         0x443
-#define __NR_mq_timedreceive 0x444
-#define __NR_mq_timedsend    0x445
-#define __NR_mq_unlink       0x446
-#define __NR_mseal           0x447
-#define __NR_msgctl          0x448
-#define __NR_msgget          0x449
-#define __NR_msgsnd          0x44A
-#define __NR_msgrcv          0x44B
-#define __NR_name_to_handle_at 0x44C
-#define __NR_newfstatat      0x44D
-#define __NR_nfsservctl      0x44E
-#define __NR_open_by_handle_at 0x44F
-#define __NR_open_tree       0x450
-#define __NR_openat2         0x451
-#define __NR_perf_event_open 0x452
-#define __NR_personality     0x453
-#define __NR_pidfd_getfd     0x454
-#define __NR_pidfd_open      0x455
-#define __NR_pidfd_send_signal 0x456
-#define __NR_pivot_root      0x457
-#define __NR_pkey_alloc      0x458
-#define __NR_pkey_free       0x459
-#define __NR_pkey_mprotect   0x45A
-#define __NR_prctl           0x45B
-#define __NR_preadv          0x45C
-#define __NR_preadv2         0x45D
-#define __NR_process_madvise 0x45E
-#define __NR_process_mrelease 0x45F
-#define __NR_process_vm_readv 0x460
-#define __NR_process_vm_writev 0x461
-#define __NR_putpmsg         0x462
-#define __NR_pwritev         0x463
-#define __NR_pwritev2        0x464
-#define __NR_query_module    0x465
-#define __NR_quotactl        0x466
-#define __NR_quotactl_fd     0x467
-#define __NR_readahead       0x468
-#define __NR_recvmmsg        0x469
-#define __NR_remap_file_pages 0x46A
-#define __NR_removexattr     0x46B
-#define __NR_request_key     0x46C
-#define __NR_restart_syscall 0x46D
-#define __NR_rseq            0x46E
-#define __NR_rt_sigqueueinfo 0x46F
-#define __NR_rt_sigtimedwait 0x470
-#define __NR_rt_tgsigqueueinfo 0x471
-#define __NR_sched_get_priority_max 0x472
-#define __NR_sched_get_priority_min 0x473
-#define __NR_sched_getattr   0x474
-#define __NR_sched_getparam  0x475
-#define __NR_sched_getscheduler 0x476
-#define __NR_sched_rr_get_interval 0x477
-#define __NR_sched_setattr   0x478
-#define __NR_sched_setparam  0x479
-#define __NR_sched_setscheduler 0x47A
-#define __NR_seccomp         0x47B
-#define __NR_security        0x47C
-#define __NR_semctl          0x47D
-#define __NR_semget          0x47E
-#define __NR_semop           0x47F
-#define __NR_semtimedop      0x480
-#define __NR_sendfile        0x481
-#define __NR_sendmmsg        0x482
-#define __NR_set_mempolicy   0x483
-#define __NR_set_mempolicy_home_node 0x484
-#define __NR_setdomainname   0x485
-#define __NR_setfsgid        0x486
-#define __NR_setfsuid        0x487
-#define __NR_sethostname     0x488
-#define __NR_setns           0x489
-#define __NR_setregid        0x48A
-#define __NR_setresgid       0x48B
-#define __NR_setresuid       0x48C
-#define __NR_setreuid        0x48D
-#define __NR_setxattr         0x48E
-#define __NR_shmat           0x48F
-#define __NR_shmctl          0x490
-#define __NR_shmdt           0x491
-#define __NR_shmget          0x492
-#define __NR_splice          0x493
-#define __NR_statmount       0x494
-#define __NR_statx           0x495
-#define __NR_swapoff         0x496
-#define __NR_swapon          0x497
-#define __NR_sync_file_range 0x498
-#define __NR_sysfs           0x499
-#define __NR_syslog          0x49A
-#define __NR_tee             0x49B
-#define __NR_time            0x49C
-#define __NR_tuxcall         0x49D
-#define __NR_unshare         0x49E
-#define __NR_uretprobe       0x49F
-#define __NR_uselib          0x4A0
-#define __NR_userfaultfd     0x4A1
-#define __NR_ustat           0x4A2
-#define __NR_utime           0x4A3
-#define __NR_utimensat       0x4A4
-#define __NR_utimes          0x4A5
-#define __NR_vhangup         0x4A6
-#define __NR_vmsplice        0x4A7
-#define __NR_vserver         0x4A8
+#define __NR_add_key         0x3E1
+#define __NR_afs_syscall     0x3E2
+#define __NR_bpf             0x3E3
+#define __NR_cachestat       0x3E4
+#define __NR_create_module   0x3E5
+#define __NR_delete_module   0x3E6
+#define __NR_epoll_ctl_old   0x3E7
+#define __NR_epoll_wait_old  0x3E8
+#define __NR_fanotify_init   0x3E9
+#define __NR_fanotify_mark   0x3EA
+#define __NR_finit_module    0x3EB
+#define __NR_fsconfig        0x3EC
+#define __NR_fsmount         0x3ED
+#define __NR_fsopen          0x3EE
+#define __NR_fspick          0x3EF
+#define __NR_get_kernel_syms 0x3F0
+#define __NR_get_mempolicy   0x3F1
+#define __NR_getpmsg         0x3F2
+#define __NR_init_module     0x3F3
+#define __NR_io_cancel       0x3F4
+#define __NR_io_destroy      0x3F5
+#define __NR_io_getevents    0x3F6
+#define __NR_io_pgetevents   0x3F7
+#define __NR_io_setup        0x3F8
+#define __NR_io_submit       0x3F9
+#define __NR_io_uring_enter  0x3FA
+#define __NR_io_uring_register 0x3FB
+#define __NR_io_uring_setup  0x3FC
+#define __NR_kexec_file_load 0x3FD
+#define __NR_kexec_load      0x3FE
+#define __NR_keyctl          0x3FF
+#define __NR_landlock_add_rule 0x400
+#define __NR_landlock_create_ruleset 0x401
+#define __NR_landlock_restrict_self 0x402
+#define __NR_listmount       0x403
+#define __NR_lookup_dcookie  0x404
+#define __NR_lsm_get_self_attr 0x405
+#define __NR_lsm_list_modules 0x406
+#define __NR_lsm_set_self_attr 0x407
+#define __NR_map_shadow_stack 0x408
+#define __NR_mbind           0x409
+#define __NR_memfd_secret    0x40A
+#define __NR_migrate_pages   0x40B
+#define __NR_mount_setattr   0x40C
+#define __NR_move_mount      0x40D
+#define __NR_move_pages      0x40E
+#define __NR_mseal           0x40F
+#define __NR_nfsservctl      0x410
+#define __NR_open_tree       0x411
+#define __NR_perf_event_open 0x412
+#define __NR_pkey_alloc      0x413
+#define __NR_pkey_free       0x414
+#define __NR_pkey_mprotect   0x415
+#define __NR_process_madvise 0x416
+#define __NR_process_mrelease 0x417
+#define __NR_putpmsg         0x418
+#define __NR_query_module    0x419
+#define __NR_quotactl        0x41A
+#define __NR_quotactl_fd     0x41B
+#define __NR_request_key     0x41C
+#define __NR_security        0x41D
+#define __NR_set_mempolicy   0x41E
+#define __NR_set_mempolicy_home_node 0x41F
+#define __NR_setns           0x420
+#define __NR_statmount       0x421
+#define __NR_sysfs           0x422
+#define __NR_tuxcall         0x423
+#define __NR_uretprobe       0x424
+#define __NR_uselib          0x425
+#define __NR_ustat           0x426
+#define __NR_vserver         0x427
