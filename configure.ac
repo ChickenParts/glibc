@@ -400,6 +400,8 @@ linux*)
 gnu*)
   host_os=`echo $host_os | sed -e 's/gnu/gnu-gnu/'`
   ;;
+chickenos*)
+  ;;
 esac
 
 AC_ARG_ENABLE([mathvec],
@@ -494,7 +496,7 @@ LIBC_PRECONFIGURE([$srcdir], [for sysdeps])
 ###
 if test -z "$enable_hacker_mode" && test x"$libc_config_ok" != xyes; then
   case "$machine-$host_os" in
-  *-linux* | *-gnu*)
+  *-linux* | *-gnu* | *-chickenos*)
     ;;
   *)
     AC_MSG_ERROR([
@@ -907,6 +909,8 @@ test "x$base_os" != x || case "$os" in
 gnu*)
   base_os=mach/hurd ;;
 linux*)
+  base_os=unix/sysv ;;
+chickenos*)
   base_os=unix/sysv ;;
 esac
 
