@@ -1,123 +1,130 @@
-/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+/* ChickenOS errno values — extended set.
+ * Must match kernel (src/arch/generic/include/bits/errno.h) and
+ * mlibc (abis/chickenos/errno.h) exactly.
+ */
 #ifndef _ASM_GENERIC_ERRNO_H
 #define _ASM_GENERIC_ERRNO_H
 
 #include <asm-generic/errno-base.h>
 
-#define	EDEADLK		35	/* Resource deadlock would occur */
-#define	ENAMETOOLONG	36	/* File name too long */
-#define	ENOLCK		37	/* No record locks available */
+/* Additional Permission & Access */
+#define ENOTSUP		EOPNOTSUPP
 
-/*
- * This error code is special: arch syscall entry code will return
- * -ENOSYS if users try to call a syscall that doesn't exist.  To keep
- * failures of syscalls that really do exist distinguishable from
- * failures due to attempts to use a nonexistent syscall, syscall
- * implementations should refrain from returning -ENOSYS.
- */
-#define	ENOSYS		38	/* Invalid system call number */
+/* Additional I/O & Data */
+#define ENODATA		0x27	/* No data available */
+#define ENOSTR		0x28	/* Not a STREAM device */
+#define ENOSR		0x29	/* Out of STREAMS resources */
+#define ETIME		0x2A	/* Timer expired */
+#define EBADFD		0x2B	/* File descriptor in bad state */
 
-#define	ENOTEMPTY	39	/* Directory not empty */
-#define	ELOOP		40	/* Too many symbolic links encountered */
-#define	EWOULDBLOCK	EAGAIN	/* Operation would block */
-#define	ENOMSG		42	/* No message of desired type */
-#define	EIDRM		43	/* Identifier removed */
-#define	ECHRNG		44	/* Channel number out of range */
-#define	EL2NSYNC	45	/* Level 2 not synchronized */
-#define	EL3HLT		46	/* Level 3 halted */
-#define	EL3RST		47	/* Level 3 reset */
-#define	ELNRNG		48	/* Link number out of range */
-#define	EUNATCH		49	/* Protocol driver not attached */
-#define	ENOCSI		50	/* No CSI structure available */
-#define	EL2HLT		51	/* Level 2 halted */
-#define	EBADE		52	/* Invalid exchange */
-#define	EBADR		53	/* Invalid request descriptor */
-#define	EXFULL		54	/* Exchange full */
-#define	ENOANO		55	/* No anode */
-#define	EBADRQC		56	/* Invalid request code */
-#define	EBADSLT		57	/* Invalid slot */
+/* Additional Process & Thread */
+#define EDEADLK		0x32	/* Resource deadlock would occur */
+#define ECANCELED	0x36	/* Operation canceled */
+#define EOWNERDEAD	0x37	/* Owner died */
+#define ENOTRECOVERABLE	0x38	/* State not recoverable */
+#define EDEADLOCK	EDEADLK
 
-#define	EDEADLOCK	EDEADLK
+/* Additional Memory & Address Space */
+#define EOVERFLOW	0x42	/* Value too large for defined data type */
 
-#define	EBFONT		59	/* Bad font file format */
-#define	ENOSTR		60	/* Device not a stream */
-#define	ENODATA		61	/* No data available */
-#define	ETIME		62	/* Timer expired */
-#define	ENOSR		63	/* Out of streams resources */
-#define	ENONET		64	/* Machine is not on the network */
-#define	ENOPKG		65	/* Package not installed */
-#define	EREMOTE		66	/* Object is remote */
-#define	ENOLINK		67	/* Link has been severed */
-#define	EADV		68	/* Advertise error */
-#define	ESRMNT		69	/* Srmount error */
-#define	ECOMM		70	/* Communication error on send */
-#define	EPROTO		71	/* Protocol error */
-#define	EMULTIHOP	72	/* Multihop attempted */
-#define	EDOTDOT		73	/* RFS specific error */
-#define	EBADMSG		74	/* Not a data message */
-#define	EOVERFLOW	75	/* Value too large for defined data type */
-#define	ENOTUNIQ	76	/* Name not unique on network */
-#define	EBADFD		77	/* File descriptor in bad state */
-#define	EREMCHG		78	/* Remote address changed */
-#define	ELIBACC		79	/* Can not access a needed shared library */
-#define	ELIBBAD		80	/* Accessing a corrupted shared library */
-#define	ELIBSCN		81	/* .lib section in a.out corrupted */
-#define	ELIBMAX		82	/* Attempting to link in too many shared libraries */
-#define	ELIBEXEC	83	/* Cannot exec a shared library directly */
-#define	EILSEQ		84	/* Illegal byte sequence */
-#define	ERESTART	85	/* Interrupted system call should be restarted */
-#define	ESTRPIPE	86	/* Streams pipe error */
-#define	EUSERS		87	/* Too many users */
-#define	ENOTSOCK	88	/* Socket operation on non-socket */
-#define	EDESTADDRREQ	89	/* Destination address required */
-#define	EMSGSIZE	90	/* Message too long */
-#define	EPROTOTYPE	91	/* Protocol wrong type for socket */
-#define	ENOPROTOOPT	92	/* Protocol not available */
-#define	EPROTONOSUPPORT	93	/* Protocol not supported */
-#define	ESOCKTNOSUPPORT	94	/* Socket type not supported */
-#define	EOPNOTSUPP	95	/* Operation not supported on transport endpoint */
-#define	EPFNOSUPPORT	96	/* Protocol family not supported */
-#define	EAFNOSUPPORT	97	/* Address family not supported by protocol */
-#define	EADDRINUSE	98	/* Address already in use */
-#define	EADDRNOTAVAIL	99	/* Cannot assign requested address */
-#define	ENETDOWN	100	/* Network is down */
-#define	ENETUNREACH	101	/* Network is unreachable */
-#define	ENETRESET	102	/* Network dropped connection because of reset */
-#define	ECONNABORTED	103	/* Software caused connection abort */
-#define	ECONNRESET	104	/* Connection reset by peer */
-#define	ENOBUFS		105	/* No buffer space available */
-#define	EISCONN		106	/* Transport endpoint is already connected */
-#define	ENOTCONN	107	/* Transport endpoint is not connected */
-#define	ESHUTDOWN	108	/* Cannot send after transport endpoint shutdown */
-#define	ETOOMANYREFS	109	/* Too many references: cannot splice */
-#define	ETIMEDOUT	110	/* Connection timed out */
-#define	ECONNREFUSED	111	/* Connection refused */
-#define	EHOSTDOWN	112	/* Host is down */
-#define	EHOSTUNREACH	113	/* No route to host */
-#define	EALREADY	114	/* Operation already in progress */
-#define	EINPROGRESS	115	/* Operation now in progress */
-#define	ESTALE		116	/* Stale file handle */
-#define	EUCLEAN		117	/* Structure needs cleaning */
-#define	ENOTNAM		118	/* Not a XENIX named type file */
-#define	ENAVAIL		119	/* No XENIX semaphores available */
-#define	EISNAM		120	/* Is a named type file */
-#define	EREMOTEIO	121	/* Remote I/O error */
-#define	EDQUOT		122	/* Quota exceeded */
+/* Additional Argument & Operation */
+#define EILSEQ		0x52	/* Illegal byte sequence */
+#define EBADMSG		0x53	/* Not a data message */
+#define EPROTO		0x54	/* Protocol error */
+#define EMSGSIZE	0x55	/* Message too long */
+#define EDQUOT		0x56	/* Quota exceeded */
+#define ESTALE		0x57	/* Stale file handle */
 
-#define	ENOMEDIUM	123	/* No medium found */
-#define	EMEDIUMTYPE	124	/* Wrong medium type */
-#define	ECANCELED	125	/* Operation Canceled */
-#define	ENOKEY		126	/* Required key not available */
-#define	EKEYEXPIRED	127	/* Key has expired */
-#define	EKEYREVOKED	128	/* Key has been revoked */
-#define	EKEYREJECTED	129	/* Key was rejected by service */
+/* Additional Resource Limits & Locking */
+#define ENOLCK		0x60	/* No locks available */
+#define EWOULDBLOCK	EAGAIN	/* Operation would block */
+#define EINTR		0x63	/* Interrupted system call */
+#define ERESTART	0x64	/* Interrupted system call should be restarted */
+#define EUSERS		0x65	/* Too many users */
 
-/* for robust mutexes */
-#define	EOWNERDEAD	130	/* Owner died */
-#define	ENOTRECOVERABLE	131	/* State not recoverable */
+/* 0x70-0x7F: IPC & Signals */
+#define ENOMSG		0x70	/* No message of desired type */
+#define EIDRM		0x71	/* Identifier removed */
+#define EMULTIHOP	0x72	/* Multihop attempted */
+#define ENOLINK		0x73	/* Link has been severed */
 
-#define ERFKILL		132	/* Operation not possible due to RF-kill */
+/* 0x80-0x8F: Network — Socket */
+#define ENOTSOCK	0x80	/* Socket operation on non-socket */
+#define EDESTADDRREQ	0x81	/* Destination address required */
+#define EPROTOTYPE	0x82	/* Protocol wrong type for socket */
+#define ENOPROTOOPT	0x83	/* Protocol not available */
+#define EPROTONOSUPPORT	0x84	/* Protocol not supported */
+#define ESOCKTNOSUPPORT	0x85	/* Socket type not supported */
+#define EPFNOSUPPORT	0x86	/* Protocol family not supported */
+#define EAFNOSUPPORT	0x87	/* Address family not supported by protocol */
+#define EADDRINUSE	0x88	/* Address already in use */
+#define EADDRNOTAVAIL	0x89	/* Cannot assign requested address */
+#define ENOBUFS		0x8A	/* No buffer space available */
+#define ESHUTDOWN	0x8B	/* Cannot send after transport endpoint shutdown */
+#define ETOOMANYREFS	0x8C	/* Too many references: cannot splice */
 
-#define EHWPOISON	133	/* Memory page has hardware error */
+/* 0x90-0x9F: Network — Connection */
+#define ENETDOWN	0x90	/* Network is down */
+#define ENETUNREACH	0x91	/* Network is unreachable */
+#define ENETRESET	0x92	/* Network dropped connection because of reset */
+#define ECONNABORTED	0x93	/* Software caused connection abort */
+#define ECONNRESET	0x94	/* Connection reset by peer */
+#define EISCONN		0x95	/* Transport endpoint is already connected */
+#define ENOTCONN	0x96	/* Transport endpoint is not connected */
+#define ETIMEDOUT	0x97	/* Connection timed out */
+#define ECONNREFUSED	0x98	/* Connection refused */
+#define EHOSTDOWN	0x99	/* Host is down */
+#define EHOSTUNREACH	0x9A	/* No route to host */
+#define EALREADY	0x9B	/* Operation already in progress */
+#define EINPROGRESS	0x9C	/* Operation now in progress */
+
+/* 0xA0-0xAF: Device & Hardware */
+#define ENOMEDIUM	0xA0	/* No medium found */
+#define EMEDIUMTYPE	0xA1	/* Wrong medium type */
+#define ERFKILL		0xA2	/* Operation not possible due to RF-kill */
+#define EHWPOISON	0xA3	/* Memory page has hardware error */
+
+/* 0xB0-0xBF: Key Management */
+#define ENOKEY		0xB0	/* Required key not available */
+#define EKEYEXPIRED	0xB1	/* Key has expired */
+#define EKEYREVOKED	0xB2	/* Key has been revoked */
+#define EKEYREJECTED	0xB3	/* Key was rejected by service */
+
+/* 0xC0-0xE2: Legacy/Compat (rarely used) */
+#define ECHRNG		0xC0	/* Channel number out of range */
+#define EL2NSYNC	0xC1	/* Level 2 not synchronized */
+#define EL3HLT		0xC2	/* Level 3 halted */
+#define EL3RST		0xC3	/* Level 3 reset */
+#define ELNRNG		0xC4	/* Link number out of range */
+#define EUNATCH		0xC5	/* Protocol driver not attached */
+#define ENOCSI		0xC6	/* No CSI structure available */
+#define EL2HLT		0xC7	/* Level 2 halted */
+#define EBADE		0xC8	/* Invalid exchange */
+#define EBADR		0xC9	/* Invalid request descriptor */
+#define EXFULL		0xCA	/* Exchange full */
+#define ENOANO		0xCB	/* No anode */
+#define EBADRQC		0xCC	/* Invalid request code */
+#define EBADSLT		0xCD	/* Invalid slot */
+#define EBFONT		0xCE	/* Bad font file format */
+#define ENOTUNIQ	0xCF	/* Name not unique on network */
+#define EREMCHG		0xD0	/* Remote address changed */
+#define ELIBACC		0xD1	/* Can not access a needed shared library */
+#define ELIBBAD		0xD2	/* Accessing a corrupted shared library */
+#define ELIBSCN		0xD3	/* .lib section in a.out corrupted */
+#define ELIBMAX		0xD4	/* Attempting to link in too many shared libraries */
+#define ELIBEXEC	0xD5	/* Cannot exec a shared library directly */
+#define ESTRPIPE	0xD6	/* Streams pipe error */
+#define EUCLEAN		0xD7	/* Structure needs cleaning */
+#define ENOTNAM		0xD8	/* Not a XENIX named type file */
+#define ENAVAIL		0xD9	/* No XENIX semaphores available */
+#define EISNAM		0xDA	/* Is a named type file */
+#define EREMOTEIO	0xDB	/* Remote I/O error */
+#define EDOTDOT		0xDC	/* RFS specific error */
+#define ENONET		0xDD	/* Machine is not on the network */
+#define ENOPKG		0xDE	/* Package not installed */
+#define EREMOTE		0xDF	/* Object is remote */
+#define EADV		0xE0	/* Advertise error */
+#define ESRMNT		0xE1	/* Srmount error */
+#define ECOMM		0xE2	/* Communication error on send */
 
 #endif
