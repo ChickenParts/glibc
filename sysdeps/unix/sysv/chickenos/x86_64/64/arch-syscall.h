@@ -117,6 +117,7 @@
 #define __NR_mlock2          0xCB
 #define __NR_mincore         0xCC
 #define __NR_remap_file_pages 0xCD
+#define __NR_mmap2           0xCE
 
 /* Process Control (0x100-0x13F) */
 #define __NR_fork            0x100
