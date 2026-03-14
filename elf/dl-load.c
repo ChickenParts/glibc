@@ -1526,10 +1526,20 @@ open_verify (const char *name, int fd,
 #define ELF32_CLASS ELFCLASS32
 #define ELF64_CLASS ELFCLASS64
 #ifndef VALID_ELF_HEADER
-# define VALID_ELF_HEADER(hdr,exp,size)	(memcmp (hdr, exp, size) == 0)
-# define VALID_ELF_OSABI(osabi)		(osabi == ELFOSABI_SYSV \
-						 || osabi == ELFOSABI_GNU \
-						 || osabi == ELFOSABI_CHICKENOS)
+/* Compare ELF header against expected, but skip EI_OSABI (byte 7)
+   since we accept multiple OSABI values (SYSV, GNU, ChickenOS). */
+static inline int
+_dl_valid_elf_header (const unsigned char *hdr, const unsigned char *exp, int size)
+{
+  for (int i = 0; i < size; i++) {
+    if (i == EI_OSABI) continue;  /* checked separately by VALID_ELF_OSABI */
+    if (hdr[i] != exp[i]) return 0;
+  }
+  return 1;
+}
+# define VALID_ELF_HEADER(hdr,exp,size)	_dl_valid_elf_header(hdr, exp, size)
+# define VALID_ELF_OSABI(osabi)		(osabi == ELFOSABI_CHICKENOS \
+						 || osabi == ELFOSABI_GNU)
 # define VALID_ELF_ABIVERSION(osabi,ver) (ver == 0)
 #elif defined MORE_ELF_HEADER_DATA
   MORE_ELF_HEADER_DATA;
