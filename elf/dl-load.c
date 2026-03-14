@@ -1527,7 +1527,9 @@ open_verify (const char *name, int fd,
 #define ELF64_CLASS ELFCLASS64
 #ifndef VALID_ELF_HEADER
 # define VALID_ELF_HEADER(hdr,exp,size)	(memcmp (hdr, exp, size) == 0)
-# define VALID_ELF_OSABI(osabi)		(osabi == ELFOSABI_SYSV)
+# define VALID_ELF_OSABI(osabi)		(osabi == ELFOSABI_SYSV \
+						 || osabi == ELFOSABI_GNU \
+						 || osabi == ELFOSABI_CHICKENOS)
 # define VALID_ELF_ABIVERSION(osabi,ver) (ver == 0)
 #elif defined MORE_ELF_HEADER_DATA
   MORE_ELF_HEADER_DATA;
