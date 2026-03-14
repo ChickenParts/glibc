@@ -1,0 +1,3 @@
+# ChickenOS x86_64 dynamic linker name
+DEFAULT			GLIBC_2.2.5
+ld=ld-chickenos-x86-64.so.1
