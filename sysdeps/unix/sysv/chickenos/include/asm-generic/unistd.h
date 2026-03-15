@@ -72,7 +72,7 @@ __SYSCALL(__NR_fremovexattr, sys_fremovexattr)
 __SYSCALL(__NR_getcwd, sys_getcwd)
 #define __NR_lookup_dcookie 18
 __SYSCALL(__NR_lookup_dcookie, sys_ni_syscall)
-#define __NR_eventfd2 19
+#define __NR_eventfd2 0x43
 __SYSCALL(__NR_eventfd2, sys_eventfd2)
 #define __NR_epoll_create1 20
 __SYSCALL(__NR_epoll_create1, sys_epoll_create1)
