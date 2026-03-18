@@ -6,19 +6,19 @@
 #define __NR_write 1
 #define __NR_open 2
 #define __NR_close 3
-#define __NR_stat 4
-#define __NR_fstat 5
-#define __NR_lstat 6
+#define __NR_stat 1028
+#define __NR_fstat 1029
+#define __NR_lstat 1030
 #define __NR_lseek 7
-#define __NR_pread64 8
-#define __NR_pwrite64 9
+#define __NR_pread64 1032
+#define __NR_pwrite64 1033
 #define __NR_readv 10
 #define __NR_writev 11
 #define __NR_access 12
 #define __NR_dup 13
 #define __NR_dup2 14
 #define __NR_dup3 15
-#define __NR_fcntl 16
+#define __NR_fcntl 1040
 #define __NR_ioctl 17
 #define __NR_fsync 19
 #define __NR_fdatasync 20
@@ -30,7 +30,7 @@
 #define __NR_rmdir 129
 #define __NR_chdir 130
 #define __NR_getcwd 132
-#define __NR_getdents64 133
+#define __NR_getdents64 1157
 #define __NR_unlink 134
 #define __NR_rename 135
 #define __NR_link 136
@@ -42,7 +42,7 @@
 #define __NR_fchown 142
 #define __NR_umask 144
 #define __NR_utimensat 148
-#define __NR_newfstatat 149
+#define __NR_newfstatat 1173
 #define __NR_statx 150
 #define __NR_openat 160
 #define __NR_renameat 163
@@ -109,7 +109,7 @@
 #define __NR_getrandom 578
 #define __NR_getrlimit 579
 #define __NR_setrlimit 580
-#define __NR_prlimit64 581
+#define __NR_prlimit64 1605
 #define __NR_getrusage 582
 #define __NR_times 583
 #define __NR_getpriority 584
@@ -129,8 +129,8 @@
 #define __NR_set_robust_list 612
 #define __NR_get_robust_list 613
 #define __NR_mount 640
-#define __NR_statfs 642
-#define __NR_fstatfs 643
+#define __NR_statfs 1666
+#define __NR_fstatfs 1667
 #define __NR_set_thread_area 769
 #define __NR_get_thread_area 770
 #define __NR_set_tid_address 771
@@ -139,6 +139,6 @@
 #define __NR_arch_prctl 768
 #define __NR_rt_sigreturn 327
 
-#define __NR_syscalls 772
+#define __NR_syscalls 2048
 
 #endif /* _ASM_UNISTD_64_H */
