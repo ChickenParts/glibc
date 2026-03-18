@@ -20,11 +20,10 @@
 #endif
 #endif
 
-/* ChickenOS ABI: f_frsize after f_bsize (related fields together) */
+/* Linux-compatible layout: f_frsize after f_namelen */
 struct statfs {
 	__statfs_word f_type;
 	__statfs_word f_bsize;
-	__statfs_word f_frsize;
 	__statfs_word f_blocks;
 	__statfs_word f_bfree;
 	__statfs_word f_bavail;
@@ -32,6 +31,7 @@ struct statfs {
 	__statfs_word f_ffree;
 	__kernel_fsid_t f_fsid;
 	__statfs_word f_namelen;
+	__statfs_word f_frsize;
 	__statfs_word f_flags;
 	__statfs_word f_spare[4];
 };
@@ -47,7 +47,6 @@ struct statfs {
 struct statfs64 {
 	__statfs_word f_type;
 	__statfs_word f_bsize;
-	__statfs_word f_frsize;
 	__u64 f_blocks;
 	__u64 f_bfree;
 	__u64 f_bavail;
@@ -55,6 +54,7 @@ struct statfs64 {
 	__u64 f_ffree;
 	__kernel_fsid_t f_fsid;
 	__statfs_word f_namelen;
+	__statfs_word f_frsize;
 	__statfs_word f_flags;
 	__statfs_word f_spare[4];
 } ARCH_PACK_STATFS64;
@@ -70,7 +70,6 @@ struct statfs64 {
 struct compat_statfs64 {
 	__u32 f_type;
 	__u32 f_bsize;
-	__u32 f_frsize;
 	__u64 f_blocks;
 	__u64 f_bfree;
 	__u64 f_bavail;
@@ -78,6 +77,7 @@ struct compat_statfs64 {
 	__u64 f_ffree;
 	__kernel_fsid_t f_fsid;
 	__u32 f_namelen;
+	__u32 f_frsize;
 	__u32 f_flags;
 	__u32 f_spare[4];
 } ARCH_PACK_COMPAT_STATFS64;
