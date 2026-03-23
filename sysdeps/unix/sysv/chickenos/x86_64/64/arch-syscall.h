@@ -21,8 +21,8 @@
 #define __NR_writev          0x0B
 #define __NR_access          0x0C
 #define __NR_dup             0x0D
-#define __NR_dup2            0x0E
-#define __NR_dup3            0x0F
+#define __NR_dup2            0x0E  /* unified: takes flags arg */
+#define __NR_dup3            0x0E  /* → dup2 */
 #define __NR_fcntl           0x410
 #define __NR_ioctl           0x11
 #define __NR_flock           0x12
@@ -36,25 +36,25 @@
 #define __NR_fallocate       0x1A
 #define __NR_copy_file_range 0x1B
 #define __NR_creat           0x1C
-#define __NR_preadv          0x1D
-#define __NR_pwritev         0x1E
-#define __NR_preadv2         0x1F
-#define __NR_pwritev2        0x20
+#define __NR_preadv          0x1D  /* unified: takes flags arg */
+#define __NR_pwritev         0x1E  /* unified: takes flags arg */
+#define __NR_preadv2         0x1D  /* → preadv */
+#define __NR_pwritev2        0x1E  /* → pwritev */
 #define __NR_splice          0x21
 #define __NR_tee             0x22
 #define __NR_vmsplice        0x23
 #define __NR_sync_file_range 0x24
 
 /* Pipes & FD Types (0x040-0x07F) */
-#define __NR_pipe            0x40
-#define __NR_pipe2           0x41
-#define __NR_eventfd         0x42
+#define __NR_pipe            0x40  /* unified: takes flags arg */
+#define __NR_pipe2           0x40  /* → pipe */
 #define __NR_eventfd2        0x43
+#define __NR_eventfd         0x43
 #define __NR_timerfd_create  0x44
 #define __NR_timerfd_settime 0x45
 #define __NR_timerfd_gettime 0x46
-#define __NR_signalfd        0x47
-#define __NR_signalfd4       0x48
+#define __NR_signalfd        0x47  /* unified: takes flags arg */
+#define __NR_signalfd4       0x47  /* → signalfd */
 #define __NR_memfd_create    0x49
 #define __NR_close_range     0x4A
 #define __NR_userfaultfd     0x4B
@@ -80,27 +80,27 @@
 #define __NR_mknod           0x91
 #define __NR_mknodat         0x92
 #define __NR_getdents        0x93
-#define __NR_utimensat       0x94
+#define __NR_utimensat       0x494
 #define __NR_newfstatat      0x495
 #define __NR_statx           0x96
-#define __NR_futimesat       0x97
-#define __NR_utime           0x98
-#define __NR_utimes          0x99
+/* 0x97 (futimesat) — COLLAPSED: dead, utimensat is canonical */
+/* 0x98 (utime) — COLLAPSED: dead, utimensat is canonical */
+/* 0x99 (utimes) — COLLAPSED: dead, utimensat is canonical */
 /* *at variants */
 #define __NR_openat          0xA0
 #define __NR_mkdirat         0xA1
 #define __NR_unlinkat        0xA2
-#define __NR_renameat        0xA3
+#define __NR_renameat        0xA3  /* unified: takes flags arg */
+#define __NR_renameat2       0xA3  /* → renameat */
 #define __NR_linkat          0xA4
 #define __NR_symlinkat       0xA5
 #define __NR_readlinkat      0xA6
-#define __NR_fchmodat        0xA7
+#define __NR_fchmodat        0xA7  /* unified: takes flags arg */
+#define __NR_fchmodat2       0xA7  /* → fchmodat */
 #define __NR_fchownat        0xA8
-#define __NR_faccessat       0xA9
-#define __NR_renameat2       0xAA
-#define __NR_openat2         0xAB
-#define __NR_faccessat2      0xAC
-#define __NR_fchmodat2       0xAD
+#define __NR_faccessat       0xA9  /* unified: takes flags arg */
+#define __NR_faccessat2      0xA9  /* → faccessat */
+#define __NR_openat2         0xA0  /* → openat */
 
 /* Memory Management (0x0C0-0x0FF) */
 #define __NR_mmap            0xC0
@@ -173,7 +173,7 @@
 #define __NR_rt_sigsuspend   0x146
 #define __NR_rt_sigreturn    0x147
 #define __NR_sigaltstack     0x148
-#define __NR_rt_sigtimedwait 0x149
+#define __NR_rt_sigtimedwait 0x549
 #define __NR_rt_sigqueueinfo 0x14A
 #define __NR_rt_tgsigqueueinfo 0x14B
 #define __NR_restart_syscall 0x14C
@@ -184,19 +184,19 @@
 #define __NR_pause           0x161
 
 /* I/O Multiplexing (0x180-0x1BF) */
-#define __NR_poll            0x180
-#define __NR_ppoll           0x181
-#define __NR_select          0x182
-#define __NR_pselect6        0x183
-#define __NR_epoll_create    0x184
-#define __NR_epoll_create1   0x185
+#define __NR_poll            0x581  /* → ppoll (glibc wraps poll→ppoll) */
+#define __NR_ppoll           0x581  /* time64 */
+#define __NR_select          0x583  /* → pselect6 */
+#define __NR_pselect6        0x583  /* time64 */
+#define __NR_epoll_create    0x184  /* unified: takes flags */
+#define __NR_epoll_create1   0x184  /* → epoll_create */
 #define __NR_epoll_ctl       0x186
-#define __NR_epoll_wait      0x187
-#define __NR_epoll_pwait     0x188
-#define __NR_epoll_pwait2    0x189
+#define __NR_epoll_wait      0x187  /* unified: sigmask + timespec */
+#define __NR_epoll_pwait     0x187  /* → epoll_wait */
+#define __NR_epoll_pwait2    0x187  /* → epoll_wait */
 /* inotify */
-#define __NR_inotify_init    0x193
-#define __NR_inotify_init1   0x194
+#define __NR_inotify_init    0x193  /* unified: takes flags */
+#define __NR_inotify_init1   0x193  /* → inotify_init */
 #define __NR_inotify_add_watch 0x195
 #define __NR_inotify_rm_watch 0x196
 
@@ -223,20 +223,20 @@
 /* Time & Timers (0x200-0x23F) */
 #define __NR_gettimeofday    0x200
 #define __NR_settimeofday    0x201
-#define __NR_clock_gettime   0x202
+#define __NR_clock_gettime   0x602
 #define __NR_clock_settime   0x203
-#define __NR_clock_getres    0x204
-#define __NR_clock_nanosleep 0x205
-#define __NR_nanosleep       0x206
+#define __NR_clock_getres    0x604
+#define __NR_clock_nanosleep 0x605
+#define __NR_nanosleep       0x606
 #define __NR_timer_create    0x207
-#define __NR_timer_settime   0x208
-#define __NR_timer_gettime   0x209
+#define __NR_timer_settime   0x608
+#define __NR_timer_gettime   0x609
 #define __NR_timer_getoverrun 0x20A
 #define __NR_timer_delete    0x20B
-#define __NR_setitimer       0x20C
-#define __NR_getitimer       0x20D
-#define __NR_clock_adjtime   0x20E
-#define __NR_adjtimex        0x20E  /* alias — glibc uses adjtimex for clock_adjtime */
+#define __NR_setitimer       0x60C
+#define __NR_getitimer       0x60D
+#define __NR_clock_adjtime   0x60E
+#define __NR_adjtimex        0x60E  /* alias — glibc uses adjtimex for clock_adjtime */
 #define __NR_time            0x210
 
 /* System Info & Resources (0x240-0x27F) */
@@ -260,18 +260,18 @@
 #define __NR_sched_setscheduler 0x251
 #define __NR_sched_get_priority_max 0x252
 #define __NR_sched_get_priority_min 0x253
-#define __NR_sched_rr_get_interval 0x254
+#define __NR_sched_rr_get_interval 0x654
 #define __NR_sched_getattr   0x255
 #define __NR_sched_setattr   0x256
 #define __NR_rseq            0x257
 #define __NR_membarrier      0x258
 #define __NR_ioprio_get      0x259
 #define __NR_ioprio_set      0x25A
-#define __NR_futex           0x260
+#define __NR_futex           0x660
 #define __NR_set_robust_list 0x264
 #define __NR_get_robust_list 0x265
-#define __NR_futex_waitv     0x266
-#define __NR_futex_wait      0x267
+#define __NR_futex_waitv     0x666
+#define __NR_futex_wait      0x667
 #define __NR_futex_wake      0x268
 #define __NR_futex_requeue   0x269
 
