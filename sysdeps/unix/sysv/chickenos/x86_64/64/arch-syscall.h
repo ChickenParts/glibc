@@ -184,7 +184,7 @@
 #define __NR_pause           0x161
 
 /* I/O Multiplexing (0x180-0x1BF) */
-#define __NR_poll            0x581  /* → ppoll (glibc wraps poll→ppoll) */
+#define __NR_poll            0x180
 #define __NR_ppoll           0x581  /* time64 */
 #define __NR_select          0x583  /* → pselect6 */
 #define __NR_pselect6        0x583  /* time64 */
