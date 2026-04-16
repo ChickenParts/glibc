@@ -1646,6 +1646,38 @@ dl_main (const ElfW(Phdr) *phdr,
       assert (_dl_rtld_map.l_libname->next == NULL);
       _dl_rtld_map.l_libname->next = &newname;
     }
+
+  /* ChickenOS: also register the basename of PT_INTERP as an alias
+     so DT_NEEDED lookups that use the unqualified name (e.g.
+     "ld-linux-x86-64.so.2" from a host-built cross-gcc whose
+     PT_INTERP is "/lib64/ld-linux-x86-64.so.2") match the already-
+     loaded rtld.  Without this, a basename-only DT_NEEDED is routed
+     through _dl_map_object and ends up loading a second copy of the
+     rtld, which is fatal: `_dl_determine_tlsoffset` only initialises
+     the original copy's `_rtld_global_ro` fields, so when libc
+     later reads `dl_tls_static_align` from the second copy it sees
+     zero and `__nptl_tls_static_size_for_stack` divides by zero in
+     `__libc_early_init`.  Append to the tail of the libname chain
+     so the interp and any SONAME alias added above remain intact.  */
+  {
+    const char *interp = _dl_rtld_map.l_libname->name;
+    const char *base = interp;
+    for (const char *p = interp; *p; ++p)
+      if (*p == '/')
+	base = p + 1;
+    if (*base != '\0' && base != interp)
+      {
+	static struct libname_list basename_alias;
+	basename_alias.name = base;
+	basename_alias.next = NULL;
+	basename_alias.dont_free = 1;
+	struct libname_list *tail = _dl_rtld_map.l_libname;
+	while (tail->next != NULL)
+	  tail = tail->next;
+	tail->next = &basename_alias;
+      }
+  }
+
   /* The ld.so must be relocated since otherwise loading audit modules
      will fail since they reuse the very same ld.so.  */
   assert (_dl_rtld_map.l_relocated);
