@@ -361,12 +361,10 @@
 #define __NR_bpf             0x783
 #define __NR_cachestat       0x784
 #define __NR_create_module   0x785
-#define __NR_delete_module   0x786
 #define __NR_epoll_ctl_old   0x787
 #define __NR_epoll_wait_old  0x788
 #define __NR_fanotify_init   0x789
 #define __NR_fanotify_mark   0x78A
-#define __NR_finit_module    0x78B
 #define __NR_fsconfig        0x78C
 #define __NR_fsmount         0x78D
 #define __NR_fsopen          0x78E
@@ -374,7 +372,6 @@
 #define __NR_get_kernel_syms 0x790
 #define __NR_get_mempolicy   0x791
 #define __NR_getpmsg         0x792
-#define __NR_init_module     0x793
 #define __NR_io_cancel       0x794
 #define __NR_io_destroy      0x795
 #define __NR_io_getevents    0x796
