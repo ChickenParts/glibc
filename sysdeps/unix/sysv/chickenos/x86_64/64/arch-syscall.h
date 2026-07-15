@@ -274,6 +274,9 @@
 #define __NR_futex_wait      0x667
 #define __NR_futex_wake      0x268
 #define __NR_futex_requeue   0x269
+#define __NR_init_module     0x26A
+#define __NR_finit_module    0x26B
+#define __NR_delete_module   0x26C
 
 /* Mount & Filesystem (0x280-0x2BF) */
 #define __NR_mount           0x280

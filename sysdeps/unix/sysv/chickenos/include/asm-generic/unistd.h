@@ -382,6 +382,12 @@ __SYSCALL(__NR_setpriority, sys_setpriority)
 __SYSCALL(__NR_getpriority, sys_getpriority)
 #define __NR_reboot 0x24B
 __SYSCALL(__NR_reboot, sys_reboot)
+#define __NR_init_module 0x26A
+__SYSCALL(__NR_init_module, sys_init_module)
+#define __NR_finit_module 0x26B
+__SYSCALL(__NR_finit_module, sys_finit_module)
+#define __NR_delete_module 0x26C
+__SYSCALL(__NR_delete_module, sys_delete_module)
 #define __NR_setregid 0x117
 __SYSCALL(__NR_setregid, sys_setregid)
 #define __NR_setgid 0x124
