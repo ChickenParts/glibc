@@ -29,7 +29,7 @@
 #define __NR_access                 0x0C
 #define __NR_dup                    0x0D
 #define __NR_dup2                   0x0E    /* unified: takes flags arg (absorbs dup3) */
-#define __NR_dup3                   0x0E    /* → dup2 */
+#define __NR_dup3                   0x0F
 #define __NR_fcntl                  0x410   /* fcntl64 */
 #define __NR_ioctl                  0x11
 #define __NR_flock                  0x12
@@ -143,19 +143,19 @@
 #define __NR_getgid                 0x123
 #define __NR_setgid                 0x124
 #define __NR_getegid                0x125
-#define __NR_getresuid              0x126
-#define __NR_setresuid              0x127
-#define __NR_getresgid              0x128
-#define __NR_setresgid              0x129
-#define __NR_setreuid               0x12A
-#define __NR_setregid               0x12B
-#define __NR_setfsuid               0x12C
-#define __NR_setfsgid               0x12D
-#define __NR_getgroups              0x12E
-#define __NR_setgroups              0x12F
-#define __NR_getcpu                 0x130
-#define __NR_personality            0x131
-#define __NR_acct                   0x132
+#define __NR_getresuid              0x112
+#define __NR_setresuid              0x113
+#define __NR_getresgid              0x114
+#define __NR_setresgid              0x115
+#define __NR_setreuid               0x116
+#define __NR_setregid               0x117
+#define __NR_setfsuid               0x118
+#define __NR_setfsgid               0x119
+#define __NR_getgroups              0x126
+#define __NR_setgroups              0x127
+#define __NR_getcpu                 0x11A
+#define __NR_personality            0x11C
+#define __NR_acct                   0x128
 
 /* ---- Signals (0x140-0x17F) ---- */
 #define __NR_kill                   0x140
@@ -180,7 +180,7 @@
 /* Collapsed: poll→ppoll, select→pselect6, epoll_create1→epoll_create,
  * epoll_pwait/epoll_pwait2→epoll_wait */
 #define __NR_ppoll                  0x581   /* time64 */
-#define __NR_poll                   0x581   /* → ppoll */
+#define __NR_poll                   0x180
 #define __NR_pselect6               0x583   /* time64 */
 #define __NR_select                 0x583   /* → pselect6 */
 #define __NR_epoll_create           0x184   /* unified: takes flags */

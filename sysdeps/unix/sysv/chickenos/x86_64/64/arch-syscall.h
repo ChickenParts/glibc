@@ -22,7 +22,7 @@
 #define __NR_access          0x0C
 #define __NR_dup             0x0D
 #define __NR_dup2            0x0E  /* unified: takes flags arg */
-#define __NR_dup3            0x0E  /* → dup2 */
+#define __NR_dup3            0x0F
 #define __NR_fcntl           0x410
 #define __NR_ioctl           0x11
 #define __NR_flock           0x12
@@ -79,7 +79,7 @@
 #define __NR_umask           0x90
 #define __NR_mknod           0x91
 #define __NR_mknodat         0x92
-#define __NR_getdents        0x93
+#define __NR_getdents        0x85
 #define __NR_utimensat       0x494
 #define __NR_newfstatat      0x495
 #define __NR_statx           0x96
@@ -206,7 +206,7 @@
 #define __NR_bind            0x1C2
 #define __NR_listen          0x1C3
 #define __NR_accept          0x1C4
-#define __NR_accept4         0x1C5
+#define __NR_accept4         0x1C4
 #define __NR_connect         0x1C6
 #define __NR_sendto          0x1C7
 #define __NR_recvfrom        0x1C8
@@ -378,9 +378,9 @@
 #define __NR_io_pgetevents   0x797
 #define __NR_io_setup        0x798
 #define __NR_io_submit       0x799
-#define __NR_io_uring_enter  0x79A
-#define __NR_io_uring_register 0x79B
-#define __NR_io_uring_setup  0x79C
+#define __NR_io_uring_enter  0x1AA
+#define __NR_io_uring_register 0x1AB
+#define __NR_io_uring_setup  0x1A9
 #define __NR_kexec_file_load 0x79D
 #define __NR_kexec_load      0x79E
 #define __NR_keyctl          0x79F
