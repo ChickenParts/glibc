@@ -26,9 +26,10 @@
 #undef  VDSO_HASH
 #define VDSO_HASH 266727264
 
-/* Not provided by the ChickenOS vDSO -- leaving these defined would make
-   glibc look for symbols that are deliberately absent. */
-#undef HAVE_GETCPU_VSYSCALL
+/* Not provided by the ChickenOS vDSO -- leaving this defined would make
+   glibc look for a symbol that is deliberately absent.  __vdso_getcpu
+   IS provided (version node CHICKEN_1.0), so HAVE_GETCPU_VSYSCALL is
+   intentionally left defined. */
 #undef HAVE_GETRANDOM_VSYSCALL
 
 #endif /* __ASSEMBLER__ */
