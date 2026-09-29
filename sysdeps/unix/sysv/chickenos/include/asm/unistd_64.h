@@ -198,6 +198,8 @@
 
 /* ---- Networking (0x1C0-0x1FF) ---- */
 #define __NR_socket                 0x1C0
+#define __NR_accept                 0x1C4
+#define __NR_accept4                0x1C5
 
 /* ---- Time & Timers (0x200-0x23F, time64 at |0x400) ---- */
 #define __NR_gettimeofday           0x200

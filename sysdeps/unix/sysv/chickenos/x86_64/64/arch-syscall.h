@@ -206,7 +206,7 @@
 #define __NR_bind            0x1C2
 #define __NR_listen          0x1C3
 #define __NR_accept          0x1C4
-#define __NR_accept4         0x1C4
+#define __NR_accept4         0x1C5
 #define __NR_connect         0x1C6
 #define __NR_sendto          0x1C7
 #define __NR_recvfrom        0x1C8
